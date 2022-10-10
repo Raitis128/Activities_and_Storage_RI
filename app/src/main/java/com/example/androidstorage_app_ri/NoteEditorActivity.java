@@ -4,12 +4,9 @@ import static com.example.androidstorage_app_ri.Constants.NOTE_ID;
 import static com.example.androidstorage_app_ri.Constants.NOTE_KEY;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,35 +39,32 @@ public class NoteEditorActivity extends AppCompatActivity {
             MainActivity.arrayAdapter.notifyDataSetChanged();
         }
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        submitButton.setOnClickListener(view -> {
 
-                String noteText = editText.getText().toString();
+            String noteText = editText.getText().toString();
 
-                if(noteText.isEmpty()) {
-                    Toast.makeText(
-                                    getApplicationContext(),
-                                    "Please type a text of a note!",
-                                    Toast.LENGTH_LONG)
-                            .show();
-                }
-                else {
-                    MainActivity.notes.set(noteId, noteText);
-                    MainActivity.arrayAdapter.notifyDataSetChanged();
-                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
-                            NOTE_KEY, Context.MODE_PRIVATE);
-                    HashSet<String> set = new HashSet(MainActivity.notes);
-                    sharedPreferences.edit().putStringSet(NOTE_KEY, set).apply();
+            if(noteText.isEmpty()) {
+                Toast.makeText(
+                                getApplicationContext(),
+                                "Please type a text of a note!",
+                                Toast.LENGTH_LONG)
+                        .show();
+            }
+            else {
+                MainActivity.notes.set(noteId, noteText);
+                MainActivity.arrayAdapter.notifyDataSetChanged();
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
+                        NOTE_KEY, Context.MODE_PRIVATE);
+                HashSet<String> set = new HashSet(MainActivity.notes);
+                sharedPreferences.edit().putStringSet(NOTE_KEY, set).apply();
 
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Note added successfully",
-                            Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Note added successfully",
+                        Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent1);
             }
         });
     }
